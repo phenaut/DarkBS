@@ -56,29 +56,6 @@ export interface ScanResult {
   scannedAt: string;
 }
 
-export interface NotableLeak {
-  id: string;
-  name: string;
-  date: string;
-  records: string;
-  origin: string;
-  severity: "CRITIQUE" | "ÉLEVÉ" | "MODÉRÉ";
-  exposed: string[];
-  description: string;
-  recommendations: string;
-}
-
-export interface ThreatIntelData {
-  leaks: NotableLeak[];
-  lastUpdate: string;
-  activeMalwareCampaigns: {
-    name: string;
-    type: string;
-    target: string;
-    prevention: string;
-  }[];
-}
-
 export interface WatchlistEntry {
   email: string;
   label: string;

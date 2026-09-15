@@ -19,7 +19,6 @@ import {
   Filter,
   Bot,
   Flame,
-  ArrowRight,
   HelpCircle,
 } from "lucide-react";
 
@@ -28,7 +27,6 @@ interface ScanResultViewProps {
   onAddToWatchlist: (email: string) => void;
   isInWatchlist: boolean;
   onSwitchToPasswordTab: () => void;
-  onAskAI: (question: string) => void;
 }
 
 export const ScanResultView: React.FC<ScanResultViewProps> = ({
@@ -36,7 +34,6 @@ export const ScanResultView: React.FC<ScanResultViewProps> = ({
   onAddToWatchlist,
   isInWatchlist,
   onSwitchToPasswordTab,
-  onAskAI,
 }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedYear, setSelectedYear] = useState<string>("all");
@@ -329,18 +326,6 @@ export const ScanResultView: React.FC<ScanResultViewProps> = ({
                 </p>
               </div>
             </div>
-
-            <button
-              onClick={() =>
-                onAskAI(
-                  `Mon email ${result.email} est apparu dans ${result.breachesCount} fuites avec un score de ${result.riskScore}/100. Que dois-je faire en priorité absolue ?`
-                )
-              }
-              className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-purple-500/15 hover:bg-purple-500/25 text-purple-300 border border-purple-500/30 transition-all flex items-center gap-1.5 cursor-pointer"
-            >
-              <span>Approfondir avec l'IA</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
           </div>
 
           {/* AI Threat Explanation */}
@@ -635,17 +620,9 @@ export const ScanResultView: React.FC<ScanResultViewProps> = ({
                         <span className="text-slate-500">Mots de passe non divulgués</span>
                       )}
 
-                      <button
-                        onClick={() =>
-                          onAskAI(
-                            `Que s'est-il passé lors du piratage de ${breach.breach} et que dois-je faire spécifiquement pour sécuriser mes comptes ?`
-                          )
-                        }
-                        className="text-purple-400 hover:text-purple-300 transition-colors flex items-center gap-1 cursor-pointer font-mono"
-                      >
-                        <span>Conseils pour {breach.breach}</span>
-                        <ArrowRight className="w-3 h-3" />
-                      </button>
+                      <span className="text-slate-500 font-mono text-[10px]">
+                        Base vérifiée XposedOrNot
+                      </span>
                     </div>
                   </div>
                 );

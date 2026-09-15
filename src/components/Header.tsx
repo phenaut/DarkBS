@@ -1,9 +1,9 @@
 import React from "react";
-import { ShieldAlert, KeyRound, Radio, Bot, Bell, ShieldCheck, Building2 } from "lucide-react";
+import { ShieldAlert, KeyRound, Bell, Building2 } from "lucide-react";
 
 interface HeaderProps {
-  activeTab: "scanner" | "domain" | "password" | "radar" | "advisor" | "watchlist";
-  setActiveTab: (tab: "scanner" | "domain" | "password" | "radar" | "advisor" | "watchlist") => void;
+  activeTab: "scanner" | "domain" | "password" | "watchlist";
+  setActiveTab: (tab: "scanner" | "domain" | "password" | "watchlist") => void;
   watchlistCount: number;
   lastScannedEmail?: string;
 }
@@ -82,34 +82,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <KeyRound className="w-4 h-4 text-amber-400" />
               <span>Mots de passe</span>
-            </button>
-
-            <button
-              id="tab-radar-btn"
-              onClick={() => setActiveTab("radar")}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
-                activeTab === "radar"
-                  ? "bg-blue-500/15 text-blue-300 border border-blue-500/30 shadow-sm"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent"
-              }`}
-            >
-              <Radio className="w-4 h-4 text-blue-400" />
-              <span className="hidden md:inline">Radar des Fuites</span>
-              <span className="md:hidden">Radar</span>
-            </button>
-
-            <button
-              id="tab-advisor-btn"
-              onClick={() => setActiveTab("advisor")}
-              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
-                activeTab === "advisor"
-                  ? "bg-purple-500/15 text-purple-300 border border-purple-500/30 shadow-sm"
-                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent"
-              }`}
-            >
-              <Bot className="w-4 h-4 text-purple-400" />
-              <span className="hidden md:inline">Conseiller IA</span>
-              <span className="md:hidden">IA</span>
             </button>
 
             <button

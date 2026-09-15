@@ -8,8 +8,6 @@ import { Header } from "./components/Header";
 import { EmailScanner } from "./components/EmailScanner";
 import { ScanResultView } from "./components/ScanResultView";
 import { PasswordLeakChecker } from "./components/PasswordLeakChecker";
-import { ThreatRadarFeed } from "./components/ThreatRadarFeed";
-import { SecurityAdvisorChat } from "./components/SecurityAdvisorChat";
 import { WatchlistSection } from "./components/WatchlistSection";
 import { DomainAuditSection } from "./components/DomainAuditSection";
 import { ScanResult, WatchlistEntry } from "./types";
@@ -17,13 +15,18 @@ import { ShieldAlert, ShieldCheck, AlertCircle } from "lucide-react";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<
-    "scanner" | "domain" | "password" | "radar" | "advisor" | "watchlist"
+    "scanner" | "domain" | "password" | "watchlist"
   >("scanner");
   const [isLoading, setIsLoading] = useState(false);
   const [currentEmail, setCurrentEmail] = useState("");
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
-  const [advisorInitialQuestion, setAdvisorInitialQuestion] = useState("");
   const [scanError, setScanError] = useState("");
+  const [isRefreshingWatchlist, setIsRefreshingWatchlist] = useState(false);
+  const [refreshProgress, setRefreshProgress] = useState<{
+    current: number;
+    total: number;
+    currentEmail: string;
+  } | null>(null);
 
   // Watchlist stored in localStorage
   const [watchlist, setWatchlist] = useState<WatchlistEntry[]>(() => {
@@ -107,12 +110,56 @@ export default function App() {
     setWatchlist((prev) => prev.filter((w) => w.email !== email));
   };
 
-  const isInWatchlist = !!(scanResult && watchlist.some((w) => w.email === scanResult.email));
+  // Refresh all addresses sequentially with delay to respect rate limits
+  const handleRefreshAllWatchlist = async () => {
+    if (isRefreshingWatchlist || watchlist.length === 0) return;
 
-  const handleAskAI = (question: string) => {
-    setAdvisorInitialQuestion(question);
-    setActiveTab("advisor");
+    setIsRefreshingWatchlist(true);
+    const updated = [...watchlist];
+
+    try {
+      for (let i = 0; i < updated.length; i++) {
+        const item = updated[i];
+        setRefreshProgress({
+          current: i + 1,
+          total: updated.length,
+          currentEmail: item.email,
+        });
+
+        try {
+          const res = await fetch("/api/scan-email", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: item.email }),
+          });
+
+          if (res.ok) {
+            const data: ScanResult = await res.json();
+            updated[i] = {
+              ...item,
+              lastScanned: new Date().toLocaleDateString("fr-FR"),
+              breachesCount: data.breachesCount,
+              riskScore: data.riskScore,
+            };
+            // Update state incrementally
+            setWatchlist([...updated]);
+          }
+        } catch (err) {
+          console.warn(`Could not refresh ${item.email}:`, err);
+        }
+
+        // Small pause between requests to prevent API rate limiting
+        if (i < updated.length - 1) {
+          await new Promise((resolve) => setTimeout(resolve, 600));
+        }
+      }
+    } finally {
+      setIsRefreshingWatchlist(false);
+      setRefreshProgress(null);
+    }
   };
+
+  const isInWatchlist = !!(scanResult && watchlist.some((w) => w.email === scanResult.email));
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-rose-500/30 selection:text-rose-200">
@@ -150,7 +197,6 @@ export default function App() {
                 onAddToWatchlist={handleAddToWatchlist}
                 isInWatchlist={isInWatchlist}
                 onSwitchToPasswordTab={() => setActiveTab("password")}
-                onAskAI={handleAskAI}
               />
             )}
           </div>
@@ -159,15 +205,6 @@ export default function App() {
         {activeTab === "domain" && <DomainAuditSection />}
 
         {activeTab === "password" && <PasswordLeakChecker />}
-
-        {activeTab === "radar" && <ThreatRadarFeed />}
-
-        {activeTab === "advisor" && (
-          <SecurityAdvisorChat
-            currentScanResult={scanResult}
-            initialQuestion={advisorInitialQuestion}
-          />
-        )}
 
         {activeTab === "watchlist" && (
           <WatchlistSection
@@ -178,8 +215,28 @@ export default function App() {
                 setWatchlist((prev) => [{ email: clean, label }, ...prev]);
               }
             }}
+            onAddMultiple={(entries) => {
+              setWatchlist((prev) => {
+                const existing = new Set(prev.map((item) => item.email));
+                const newItems: WatchlistEntry[] = [];
+                for (const entry of entries) {
+                  const clean = entry.email.trim().toLowerCase();
+                  if (clean && !existing.has(clean)) {
+                    existing.add(clean);
+                    newItems.push({
+                      email: clean,
+                      label: entry.label || "Import fichier",
+                    });
+                  }
+                }
+                return [...newItems, ...prev];
+              });
+            }}
             onRemove={handleRemoveFromWatchlist}
             onScanEmail={handleScanEmail}
+            onRefreshAll={handleRefreshAllWatchlist}
+            isRefreshingAll={isRefreshingWatchlist}
+            refreshProgress={refreshProgress}
           />
         )}
       </main>
