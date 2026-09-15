@@ -39,6 +39,8 @@ export const WatchlistSection: React.FC<WatchlistSectionProps> = ({
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-xs font-mono">
           <Bell className="w-3.5 h-3.5 text-emerald-400" />
           <span>Surveillance Continue & Veille Dark Web</span>
+          <span className="text-emerald-500/50">•</span>
+          <span>Auteur : <strong className="text-emerald-200">Pierre HENAUT</strong></span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-sans">
           Gestion de votre <span className="text-emerald-400">Liste de Veille</span>

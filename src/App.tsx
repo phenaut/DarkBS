@@ -11,12 +11,13 @@ import { PasswordLeakChecker } from "./components/PasswordLeakChecker";
 import { ThreatRadarFeed } from "./components/ThreatRadarFeed";
 import { SecurityAdvisorChat } from "./components/SecurityAdvisorChat";
 import { WatchlistSection } from "./components/WatchlistSection";
+import { DomainAuditSection } from "./components/DomainAuditSection";
 import { ScanResult, WatchlistEntry } from "./types";
 import { ShieldAlert, ShieldCheck, AlertCircle } from "lucide-react";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<
-    "scanner" | "password" | "radar" | "advisor" | "watchlist"
+    "scanner" | "domain" | "password" | "radar" | "advisor" | "watchlist"
   >("scanner");
   const [isLoading, setIsLoading] = useState(false);
   const [currentEmail, setCurrentEmail] = useState("");
@@ -155,6 +156,8 @@ export default function App() {
           </div>
         )}
 
+        {activeTab === "domain" && <DomainAuditSection />}
+
         {activeTab === "password" && <PasswordLeakChecker />}
 
         {activeTab === "radar" && <ThreatRadarFeed />}
@@ -184,13 +187,17 @@ export default function App() {
       {/* Footer */}
       <footer className="border-t border-slate-800/80 bg-slate-950 py-8 mt-12 text-xs text-slate-500">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-2 text-center md:text-left">
             <span className="font-bold text-white font-sans">DarkWebScan</span>
             <span>•</span>
             <span>Analyse de sécurité & protection contre les violations de données</span>
+            <span className="hidden sm:inline">•</span>
+            <span className="px-2 py-0.5 rounded bg-slate-800/90 text-slate-200 border border-slate-700 font-medium">
+              Auteur : <span className="text-rose-400 font-semibold">Pierre HENAUT</span>
+            </span>
           </div>
 
-          <div className="flex flex-wrap items-center gap-4 font-mono text-[11px] text-slate-400">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-4 font-mono text-[11px] text-slate-400">
             <span>Zéro journalisation des mots de passe</span>
             <span>•</span>
             <span>Cryptographie k-Anonymat SHA-1</span>

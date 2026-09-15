@@ -1,6 +1,6 @@
 {
   "name": "DarkWeb Breach Scanner",
-  "description": "Scanner d'exposition d'adresses email et mots de passe sur le Dark Web et bases de données piratées, avec diagnostic de sécurité et recommandations IA.",
+  "description": "Scanner d'exposition d'adresses email et mots de passe sur le Dark Web et bases de données piratées, avec diagnostic de sécurité et recommandations IA. Développé par Pierre HENAUT.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

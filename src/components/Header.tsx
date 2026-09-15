@@ -1,9 +1,9 @@
 import React from "react";
-import { ShieldAlert, KeyRound, Radio, Bot, Bell, ShieldCheck } from "lucide-react";
+import { ShieldAlert, KeyRound, Radio, Bot, Bell, ShieldCheck, Building2 } from "lucide-react";
 
 interface HeaderProps {
-  activeTab: "scanner" | "password" | "radar" | "advisor" | "watchlist";
-  setActiveTab: (tab: "scanner" | "password" | "radar" | "advisor" | "watchlist") => void;
+  activeTab: "scanner" | "domain" | "password" | "radar" | "advisor" | "watchlist";
+  setActiveTab: (tab: "scanner" | "domain" | "password" | "radar" | "advisor" | "watchlist") => void;
   watchlistCount: number;
   lastScannedEmail?: string;
 }
@@ -32,9 +32,12 @@ export const Header: React.FC<HeaderProps> = ({
                   <span className="w-1.5 h-1.5 rounded-full bg-rose-400 animate-ping" />
                   LIVE THREAT INTEL
                 </span>
+                <span className="hidden lg:inline-flex items-center gap-1 text-[11px] font-mono px-2 py-0.5 rounded-md bg-slate-800 text-slate-300 border border-slate-700">
+                  Auteur : <span className="text-white font-semibold">Pierre HENAUT</span>
+                </span>
               </div>
               <p className="text-xs text-slate-400 hidden sm:block">
-                Détection de fuites d'identifiants & analyse d'exposition pirate
+                Détection de fuites d'identifiants & analyse d'exposition pirate • Par Pierre HENAUT
               </p>
             </div>
           </div>
@@ -52,6 +55,20 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <ShieldAlert className="w-4 h-4 text-rose-400" />
               <span>Scanner d'Email</span>
+            </button>
+
+            <button
+              id="tab-domain-btn"
+              onClick={() => setActiveTab("domain")}
+              className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                activeTab === "domain"
+                  ? "bg-indigo-500/15 text-indigo-300 border border-indigo-500/30 shadow-sm"
+                  : "text-slate-400 hover:text-slate-200 hover:bg-slate-900 border border-transparent"
+              }`}
+            >
+              <Building2 className="w-4 h-4 text-indigo-400" />
+              <span className="hidden md:inline">Audit Domaine</span>
+              <span className="md:hidden">Domaine</span>
             </button>
 
             <button

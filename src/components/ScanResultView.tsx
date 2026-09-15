@@ -174,6 +174,9 @@ export const ScanResultView: React.FC<ScanResultViewProps> = ({
                 >
                   NIVEAU : {result.aiAssessment?.severity || (result.found ? "ÉLEVÉ" : "SÉCURISÉ")}
                 </span>
+                <span className="text-[11px] font-mono px-2.5 py-0.5 rounded-full bg-slate-800/90 text-slate-300 border border-slate-700">
+                  Auteur : <strong className="text-white">Pierre HENAUT</strong>
+                </span>
               </div>
 
               <h2 className="text-xl sm:text-2xl font-bold text-white">

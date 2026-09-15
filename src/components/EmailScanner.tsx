@@ -73,7 +73,9 @@ export const EmailScanner: React.FC<EmailScannerProps> = ({
         <div className="max-w-3xl mx-auto text-center space-y-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-800/80 border border-slate-700/80 text-slate-300 text-xs font-mono">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-            Scanner d'exposition d'identifiants Dark Web & Cyberattaques
+            <span>Scanner d'exposition d'identifiants Dark Web & Cyberattaques</span>
+            <span className="text-slate-500">•</span>
+            <span>Auteur : <strong className="text-slate-200">Pierre HENAUT</strong></span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-extrabold tracking-tight text-white font-sans">

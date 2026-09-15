@@ -38,6 +38,8 @@ export const ThreatRadarFeed: React.FC = () => {
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-300 text-xs font-mono">
           <Radio className="w-3.5 h-3.5 animate-pulse text-blue-400" />
           <span>Surveillance Globale des Fuites Dark Web & Campagnes Cyber</span>
+          <span className="text-blue-500/50">•</span>
+          <span>Auteur : <strong className="text-blue-200">Pierre HENAUT</strong></span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-sans">
           Radar des Méga-Fuites & <span className="text-blue-400">Cyberattaques Récentes</span>

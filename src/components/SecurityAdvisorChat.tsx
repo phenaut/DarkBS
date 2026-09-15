@@ -96,6 +96,8 @@ export const SecurityAdvisorChat: React.FC<SecurityAdvisorChatProps> = ({
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-mono">
           <Bot className="w-3.5 h-3.5 text-purple-400" />
           <span>Consultant Cybersécurité & Dark Web IA</span>
+          <span className="text-purple-500/50">•</span>
+          <span>Auteur : <strong className="text-purple-200">Pierre HENAUT</strong></span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-sans">
           Posez vos questions à l'analyste en <span className="text-purple-400">Cybermenaces</span>

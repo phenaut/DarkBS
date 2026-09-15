@@ -88,6 +88,8 @@ export const PasswordLeakChecker: React.FC = () => {
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs font-mono">
           <KeyRound className="w-3.5 h-3.5" />
           <span>Vérificateur de Dictionnaires Pirates (k-Anonymat NIST)</span>
+          <span className="text-amber-500/50">•</span>
+          <span>Auteur : <strong className="text-amber-200">Pierre HENAUT</strong></span>
         </div>
         <h2 className="text-2xl sm:text-3xl font-extrabold text-white font-sans">
           Ce mot de passe circule-t-il sur le <span className="text-amber-400">Dark Web</span> ?

@@ -86,3 +86,44 @@ export interface WatchlistEntry {
   breachesCount?: number;
   riskScore?: number;
 }
+
+export interface DnsSecurityCheck {
+  recordType: "MX" | "SPF" | "DMARC" | "DNSSEC";
+  status: "SECURE" | "WARNING" | "CRITICAL" | "INFO";
+  value: string;
+  summary: string;
+  recommendation?: string;
+}
+
+export interface DomainKnownBreach {
+  breachID: string;
+  title: string;
+  date: string;
+  recordsCount?: number;
+  severity: "Critique" | "Élevé" | "Moyen" | "Faible";
+  exposedData: string[];
+  description: string;
+  verified: boolean;
+  source: string;
+}
+
+export interface DomainAuditResult {
+  domain: string;
+  companyName: string;
+  sector: string;
+  overallRiskScore: number;
+  securityRating: "A" | "B" | "C" | "D" | "F";
+  dnsPosture: {
+    mxServers: string[];
+    spfRecord: string | null;
+    spfValid: boolean;
+    dmarcRecord: string | null;
+    dmarcPolicy: "reject" | "quarantine" | "none" | "missing";
+    hasDkimOrSecurityTxt: boolean;
+    checks: DnsSecurityCheck[];
+  };
+  knownIncidents: DomainKnownBreach[];
+  historicalExposuresCount: number;
+  recommendations: string[];
+  auditedAt: string;
+}
